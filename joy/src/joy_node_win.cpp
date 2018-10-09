@@ -26,6 +26,7 @@ SOFTWARE.
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/Empty.h"
 
+#include <windows.h>
 #include <mmsystem.h>
 #define ERR_NODEVICE -1
 
