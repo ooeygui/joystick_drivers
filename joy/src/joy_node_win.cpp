@@ -154,7 +154,6 @@ class Joystick
       if (_gameController == nullptr)
       {
         SDL_JoystickUpdate();
-
         int nJoysticks = SDL_NumJoysticks();
         for (int i = 0; i < nJoysticks; i++) 
         {
@@ -228,6 +227,7 @@ class Joystick
               break;
             }
           }
+
           joy_msg.header.stamp = ros::Time().now();
           _joystickPublisher.publish(joy_msg);
 
