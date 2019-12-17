@@ -180,6 +180,7 @@ class Joystick
           {
             switch (e.type)
             {
+<<<<<<< HEAD
               case SDL_JOYAXISMOTION:
               {
                   //Motion on controller 0
@@ -200,6 +201,15 @@ class Joystick
                     }
 
                     joy_msg.axes[e.jaxis.axis] = value * scale;
+=======
+                //Motion on controller 0
+                if (e.jaxis.which == _gameControllerIndex)
+                {     
+                  float value = e.jaxis.value;                   
+                  if (value > _unscaled_deadzone)
+                  {
+                    value -= _unscaled_deadzone;
+>>>>>>> 0174569... uint -> float - handle negative values correctly
                   }
               }
               break;
