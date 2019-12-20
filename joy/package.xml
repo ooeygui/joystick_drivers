@@ -26,7 +26,9 @@
   <depend>roscpp</depend>
   <depend>diagnostic_updater</depend>
   <depend>sensor_msgs</depend>
+
   <!-- depend>joystick</depend -->
+  <exec_depend>sdl2</exec_depend>
 
   <test_depend>rosbag</test_depend>
 
