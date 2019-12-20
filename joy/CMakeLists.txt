@@ -56,15 +56,9 @@ else()
 
 
   file(DOWNLOAD
-<<<<<<< HEAD
       https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/e84ccd2617a2c5c507e08a0b6221a7bc23d97695/gamecontrollerdb.txt
       ${PROJECT_SOURCE_DIR}/launch/gamecontrollerdb.txt
       EXPECTED_HASH SHA512=57ec9435015028d768bd7a2c2c841923bfda88c72cbf33d9c5aa0809ae10b1933c597c748a69414285cdd0a6e1488694c622b884eb2992a23c28025fae77b646
-=======
-      https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/master/gamecontrollerdb.txt
-      ${PROJECT_SOURCE_DIR}/launch/gamecontrollerdb.txt
-      EXPECTED_HASH SHA512=226df49456270605ac388ee7cfe6edd60a51d60150031ca35ccc0ac1d4b88602afe6a4de1b10906cdeb39988653faa1e5275d6c517110ee139490fb3d501c43b
->>>>>>> 8d95beb... Add Support for 3rd party Mappings
       SHOW_PROGRESS
   )    
 
