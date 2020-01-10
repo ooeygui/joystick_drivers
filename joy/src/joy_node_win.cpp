@@ -116,7 +116,7 @@ class Joystick
     _unscaled_deadzone = 32767. * _deadzone;
 
     // Rate is measured in Hz
-    ros::Rate loop_rate(50);
+    ros::Rate loop_rate(100);
     ros::Rate nojoy_rate(1);
     sensor_msgs::Joy joy_msg;
     sensor_msgs::Joy last_published_joy_msg; // used for sticky buttons option
@@ -177,60 +177,57 @@ class Joystick
       if (_gameController != nullptr)
       {
           SDL_Event e;
-          bool processedEvent = false;
-          SDL_PollEvent(&e);
-          switch (e.type)
+          while (SDL_PollEvent(&e))
           {
-            case SDL_JOYAXISMOTION:
+            switch (e.type)
             {
-                //Motion on controller 0
+              case SDL_JOYAXISMOTION:
+              {
+                  //Motion on controller 0
+                  if (e.jaxis.which == _gameControllerIndex)
+                  {     
+                    float value = e.jaxis.value;                   
+                    if (value > _unscaled_deadzone)
+                    {
+                      value -= _unscaled_deadzone;
+                    }
+                    else if (value < -_unscaled_deadzone)
+                    {
+                      value += _unscaled_deadzone;
+                    }
+                    else
+                    {
+                      value = 0;
+                    }
+
+                    joy_msg.axes[e.jaxis.axis] = value * scale;
+                  }
+              }
+              break;
+
+              case SDL_JOYBUTTONDOWN:
+              {
+                  joy_msg.buttons[e.jbutton.button] = 1.0;
+              }
+              break;
+              case SDL_JOYBUTTONUP:
+              {
+                  joy_msg.buttons[e.jbutton.button] = 0.0;
+              }
+              break;
+
+              case SDL_JOYDEVICEREMOVED:
+              {
                 if (e.jaxis.which == _gameControllerIndex)
                 {     
-                  float value = e.jaxis.value;                   
-                  if (value > _unscaled_deadzone)
-                  {
-                    value -= _unscaled_deadzone;
-                  }
-                  else if (value < -_unscaled_deadzone)
-                  {
-                    value += _unscaled_deadzone;
-                  }
-                  else
-                  {
-                    value = 0;
-                  }
-
-                  joy_msg.axes[e.jaxis.axis] = value * scale;
-                  processedEvent = true;
+                  _gameControllerIndex = -1;
+                  SDL_JoystickClose(_gameController);
+                  _gameController = nullptr;
                 }
-            }
-            break;
-
-            case SDL_JOYBUTTONDOWN:
-            {
-                joy_msg.buttons[e.jbutton.button] = 1.0;
-                processedEvent = true;
-            }
-            break;
-            case SDL_JOYBUTTONUP:
-            {
-                joy_msg.buttons[e.jbutton.button] = 0.0;
-                processedEvent = true;
-            }
-            break;
-
-            case SDL_JOYDEVICEREMOVED:
-            {
-              if (e.jaxis.which == _gameControllerIndex)
-              {     
-                _gameControllerIndex = -1;
-                SDL_JoystickClose(_gameController);
-                _gameController = nullptr;
               }
+              break;
             }
-            break;
           }
-
           joy_msg.header.stamp = ros::Time().now();
           _joystickPublisher.publish(joy_msg);
 
