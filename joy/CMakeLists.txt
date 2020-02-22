@@ -58,7 +58,7 @@ else()
   file(DOWNLOAD
       https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/e84ccd2617a2c5c507e08a0b6221a7bc23d97695/gamecontrollerdb.txt
       ${PROJECT_SOURCE_DIR}/launch/gamecontrollerdb.txt
-      EXPECTED_HASH SHA512=57ec9435015028d768bd7a2c2c841923bfda88c72cbf33d9c5aa0809ae10b1933c597c748a69414285cdd0a6e1488694c622b884eb2992a23c28025fae77b646
+      EXPECTED_HASH SHA512=cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
       SHOW_PROGRESS
   )    
 
